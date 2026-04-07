@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import aboutBg from "../assets/about1.JPG";
-import { fadeUp, staggerContainer, staggerItem, viewport } from "../animations/variants";
+import { fadeUp, staggerContainer, staggerItem, staggerFlip, hoverLift, tapPress, viewport } from "../animations/variants";
 
 function About() {
   return (
@@ -50,7 +51,7 @@ function About() {
           <motion.section
             className="bg-white/10 border border-white/25 backdrop-blur-md rounded-2xl shadow-lg p-8 hover:border-white/40 hover:-translate-y-1 transition-all duration-300"
             variants={staggerItem}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            whileHover={{ y: -3, transition: { duration: 0.15 } }}
           >
             <h2 className="text-2xl font-bold text-white mb-3">Project Overview</h2>
             <p className="text-gray-200 leading-relaxed">

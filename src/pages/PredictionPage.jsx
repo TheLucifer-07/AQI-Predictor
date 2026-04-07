@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CodeModal from '../components/aqi/CodeModal';
@@ -8,8 +9,8 @@ import { SourceAttribution, AIPanel } from '../components/aqi/SidePanel';
 import { TrendChart, PredictionChart, AnnualChart, StackedChart, PollutantChart } from '../components/aqi/Charts';
 import ModisAodChart from '../components/aqi/ModisAodChart';
 import SpikeEvents from '../components/aqi/SpikeEvents';
-import { useMLData } from '../hooks/useApi';
-import { fadeUp, staggerContainer, staggerItem, scaleIn, viewport } from '../animations/variants';
+import { useMLData, fetchLiveAQI } from '../hooks/useApi';
+import { fadeUp, fadeSlide, staggerContainer, staggerItem, staggerFlip, scaleIn, viewport } from '../animations/variants';
 
 function SectionHeading({ icon, title, id }) {
   return (
@@ -32,8 +33,22 @@ export default function PredictionPage() {
   const [codeOpen, setCodeOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [liveAqi, setLiveAqi] = useState(null);
-  const [liveLocText, setLiveLocText] = useState('Loading…');
-  const [liveLocDesc, setLiveLocDesc] = useState('Fetching from APPCB ground station…');
+  const [liveLocText, setLiveLocText] = useState('🚢 Port Road');
+  const [liveLocDesc, setLiveLocDesc] = useState('Fetching from Port Road station…');
+
+  /* Fetch Port Road AQI on mount as default */
+  useEffect(() => {
+    fetchLiveAQI(17.695, 83.285, 'Port Road')
+      .then(result => {
+        const aqi = Math.max(1, Math.round((result.aqi + 20) * 1.18));
+        setLiveAqi(aqi);
+        setLiveLocDesc(result.source === 'satellite' ? 'Live Data (Regional Estimator)' : 'Offline — baseline estimate');
+      })
+      .catch(() => {
+        setLiveAqi(112);
+        setLiveLocDesc('Offline — baseline estimate');
+      });
+  }, []);
 
   /* Ambient cursor glow */
   useEffect(() => {

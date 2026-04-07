@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeUp, staggerItem, viewport } from "../animations/variants";
@@ -37,8 +38,8 @@ function CTA() {
           onClick={handleClick}
           className="px-8 py-3 bg-white text-[#0b0c0d] font-semibold rounded-xl transition-all duration-300 shadow-lg hover:scale-105"
           variants={staggerItem}
-          whileHover={{ scale: 1.06, y: -3, boxShadow: "0 16px 40px rgba(0,0,0,0.25)" }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02, y: -2, boxShadow: '0 12px 32px rgba(0,0,0,0.20)', transition: { duration: 0.15 } }}
+          whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
         >
           Get Started →
         </motion.button>

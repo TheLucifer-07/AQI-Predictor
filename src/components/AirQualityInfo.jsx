@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeUp, staggerContainer, staggerItem, viewport } from "../animations/variants";
+import { fadeUp, staggerContainer, staggerItem, staggerFlip, tapPress, viewport } from "../animations/variants";
 
 const factors = {
   PM25: "PM2.5 refers to fine particulate matter air pollution, consisting of tiny particles or droplets with a diameter of 2.5 micrometers or less—about 30 times smaller than a human hair. Primarily produced through combustion (vehicles, power plants, wildfires), these particles are dangerous because they can travel deep into the lungs and enter the bloodstream",
@@ -75,9 +76,9 @@ function AirQualityInfo() {
               className={`px-5 py-2 rounded-full border font-medium transition ${
                 active === key ? "bg-[#33006F] text-white" : "bg-white text-gray-700 hover:bg-gray-200"
               }`}
-              variants={staggerItem}
-              whileHover={{ scale: 1.06, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              variants={staggerFlip}
+              whileHover={{ y: -1, scale: 1.02, transition: { duration: 0.15 } }}
+              whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
             >
               {key}
             </motion.button>

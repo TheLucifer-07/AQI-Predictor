@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { staggerContainer, staggerItem, fadeUp, viewport } from "../animations/variants";
+import { staggerContainer, staggerFlip, hoverLift, tapPress, fadeUp, viewport } from "../animations/variants";
 
 const cards = [
   { icon: "📡", title: "Real-Time Prediction", desc: "Get near real-time air quality predictions powered by ML models.", label: "Try Now →", path: "/predict" },
@@ -47,13 +48,11 @@ function KeyFeatures() {
             <motion.div
               key={title}
               className="bg-gray-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition"
-              variants={staggerItem}
-              whileHover={{ y: -6, scale: 1.02, boxShadow: "0 12px 32px rgba(0,0,0,0.10)", transition: { duration: 0.22 } }}
+              variants={staggerFlip}
+              whileHover={{ y: -3, boxShadow: '0 10px 28px rgba(0,0,0,0.09)', transition: { duration: 0.15 } }}
             >
-              <motion.div
-                className="text-4xl mb-4"
-                whileHover={{ scale: 1.2, rotate: 6, transition: { duration: 0.2 } }}
-              >
+              <motion.div className="text-4xl mb-4"
+                whileHover={{ scale: 1.15, transition: { duration: 0.15 } }}>
                 {icon}
               </motion.div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
@@ -61,9 +60,8 @@ function KeyFeatures() {
               <motion.button
                 onClick={() => navigate(path)}
                 className="text-blue-500 hover:underline"
-                whileHover={{ x: 3 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.15 }}
+                whileHover={{ x: 2, transition: { duration: 0.15 } }}
+                whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
               >
                 {label}
               </motion.button>

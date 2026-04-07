@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fetchLiveAQI } from '../../hooks/useApi';
+import { staggerContainer, staggerFlip, hoverLift, tapPress, fadeSlide } from '../../animations/variants';
 
 const LOCATIONS = [
   { name: 'APPCB City Centre', emoji: '🏢', coords: [17.729, 83.315], scale: 1.0,  causes: ['🚗 Dense city-centre traffic on busy arterial roads', '🏙️ Municipal waste burning & diesel generators', '🌬️ Coastal wind trapping in surrounding hills'] },
@@ -32,7 +35,6 @@ export default function LocationExplorer({ onLocationSelect, onLiveAqiUpdate }) 
     setLoading(true);
     setDetail({ loc, aqi: null, catName: '', wind: '—', temp: '—' });
     onLocationSelect?.(loc);
-
     try {
       const [lat, lon] = loc.coords;
       const result  = await fetchLiveAQI(lat, lon, loc.name);
@@ -60,27 +62,42 @@ export default function LocationExplorer({ onLocationSelect, onLiveAqiUpdate }) 
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">Click any location to load its live air quality</p>
         </div>
-        {activeIdx !== null && (
-          <span className="text-xs font-medium text-blue-500 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
-            {LOCATIONS[activeIdx].emoji} {LOCATIONS[activeIdx].name} selected
-          </span>
-        )}
+        <AnimatePresence>
+          {activeIdx !== null && (
+            <motion.span
+              className="text-xs font-medium text-blue-500 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full"
+              initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.15 }}
+            >
+              {LOCATIONS[activeIdx].emoji} {LOCATIONS[activeIdx].name} selected
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-2.5">
+      {/* Location buttons — stagger flip */}
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-2.5"
+        variants={staggerContainer} initial="hidden" whileInView="visible"
+        viewport={{ once: true, amount: 0.05 }}
+        style={{ perspective: 800 }}
+      >
         {LOCATIONS.map((loc, idx) => {
           const isActive = activeIdx === idx;
           return (
-            <button
+            <motion.button
               key={idx}
               onClick={() => selectLocation(loc, idx)}
-              className="flex flex-col items-center gap-1 p-3 rounded-xl border text-center transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="flex flex-col items-center gap-1 p-3 rounded-xl border text-center focus:outline-none focus:ring-2 focus:ring-blue-300"
               style={{
                 border: isActive ? '1.5px solid #3b82f6' : '1.5px solid #e2e8f0',
                 background: isActive ? 'rgba(59,130,246,0.05)' : 'white',
                 boxShadow: isActive ? '0 0 0 3px rgba(59,130,246,0.1)' : undefined,
                 fontFamily: 'var(--font-main)',
               }}
+              variants={staggerFlip}
+              whileHover={{ y: -2, boxShadow: '0 6px 16px rgba(0,0,0,0.08)', transition: { duration: 0.15 } }}
+              whileTap={tapPress}
             >
               <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{loc.emoji}</span>
               <span className="text-xs font-600 text-slate-700 leading-tight" style={{ fontWeight: 600, fontSize: '0.72rem' }}>{loc.name}</span>
@@ -88,45 +105,60 @@ export default function LocationExplorer({ onLocationSelect, onLiveAqiUpdate }) 
                 ? <span className="text-xs text-blue-400">Loading…</span>
                 : <span className="text-xs text-slate-400" style={{ fontSize: '0.68rem' }}>Tap for AQI</span>
               }
-            </button>
+            </motion.button>
           );
         })}
-      </div>
+      </motion.div>
 
-      {detail && (
-        <div className="mt-5 p-4 sm:p-5 rounded-xl border border-blue-100 bg-blue-50/40"
-             style={{ animation: 'fadeSlideUp 0.28s ease' }}>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="flex flex-col gap-1">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
-                {detail.loc.emoji} {detail.loc.name}
-              </span>
-              <span style={{ fontSize: '2.8rem', fontWeight: 700, lineHeight: 1, letterSpacing: '-0.04em', color: detail.aqi ? getCatColor(detail.aqi) : 'var(--primary)' }}>
-                {loading ? '…' : (detail.aqi ?? '…')}
-              </span>
-              <span className="text-sm font-medium text-slate-600">{detail.catName}</span>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">⚠️ Main Sources</p>
-              <ul className="flex flex-col gap-1.5">
-                {detail.loc.causes.map((c, i) => (
-                  <li key={i} className="text-xs text-slate-600 flex items-start gap-1.5">
-                    <span className="mt-0.5 flex-shrink-0">•</span>{c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Live Conditions</p>
-              <div className="flex flex-col gap-1.5 text-sm text-slate-700">
-                <span>🌬️ Wind: <strong>{detail.wind} km/h</strong></span>
-                <span>🌡️ Temp: <strong>{detail.temp}°C</strong></span>
-                <span>{detail.pollLevel}</span>
+      {/* Detail panel — slide in from below */}
+      <AnimatePresence>
+        {detail && (
+          <motion.div
+            className="mt-5 p-4 sm:p-5 rounded-xl border border-blue-100 bg-blue-50/40"
+            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.22, ease: [0.0, 0.0, 0.2, 1.0] }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="flex flex-col gap-1">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                  {detail.loc.emoji} {detail.loc.name}
+                </span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={detail.aqi}
+                    style={{ fontSize: '2.8rem', fontWeight: 700, lineHeight: 1, letterSpacing: '-0.04em', color: detail.aqi ? getCatColor(detail.aqi) : 'var(--primary)' }}
+                    initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {loading ? '…' : (detail.aqi ?? '…')}
+                  </motion.span>
+                </AnimatePresence>
+                <span className="text-sm font-medium text-slate-600">{detail.catName}</span>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">⚠️ Main Sources</p>
+                <ul className="flex flex-col gap-1.5">
+                  {detail.loc.causes.map((c, i) => (
+                    <motion.li key={i} className="text-xs text-slate-600 flex items-start gap-1.5"
+                      initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05, duration: 0.18 }}>
+                      <span className="mt-0.5 flex-shrink-0">•</span>{c}
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Live Conditions</p>
+                <div className="flex flex-col gap-1.5 text-sm text-slate-700">
+                  <span>🌬️ Wind: <strong>{detail.wind} km/h</strong></span>
+                  <span>🌡️ Temp: <strong>{detail.temp}°C</strong></span>
+                  <span>{detail.pollLevel}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

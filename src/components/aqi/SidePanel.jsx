@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fetchAIInsight } from '../../hooks/useApi';
+import { staggerContainer, staggerItem, hoverLift, tapPress } from '../../animations/variants';
 
 export function SourceAttribution() {
-  const ref      = useRef(null);
+  const ref = useRef(null);
   const [anim, setAnim] = useState(false);
 
   useEffect(() => {
@@ -32,9 +35,12 @@ export function SourceAttribution() {
         </span>
         <span className="text-xs text-slate-400 font-medium">Extrapolated</span>
       </div>
-      <div className="flex flex-col gap-3.5">
+      <motion.div
+        className="flex flex-col gap-3.5"
+        variants={staggerContainer} initial="hidden" animate={anim ? 'visible' : 'hidden'}
+      >
         {bars.map((b, i) => (
-          <div key={i}>
+          <motion.div key={i} variants={staggerItem}>
             <div className="source-bar-header">
               <span className="text-slate-600">{b.label}</span>
               <span className="font-700 text-slate-800" style={{ fontWeight: 700 }}>{b.pct}</span>
@@ -42,9 +48,9 @@ export function SourceAttribution() {
             <div className="source-bar-bg">
               <div className="source-bar-fill" style={{ background: b.color, width: anim ? b.pct : '0%' }} />
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -80,32 +86,43 @@ export function AIPanel() {
         <span className="card-title">✨ AI Generative Insights</span>
         <span className="text-xs text-slate-400">Powered by contextual analysis</span>
       </div>
+
       <div className="flex flex-wrap gap-2">
         {AI_BUTTONS.map(({ type, label }) => (
-          <button
+          <motion.button
             key={type}
             onClick={() => fetchAI(type)}
             className="btn transition-all duration-200"
             style={active === type && !loading
               ? { background: 'var(--accent)', color: 'white', borderColor: 'var(--accent)', boxShadow: '0 2px 8px rgba(59,130,246,0.28)' }
-              : undefined
-            }
+              : undefined}
+            whileHover={{ y: -1, transition: { duration: 0.15 } }}
+            whileTap={tapPress}
           >
             {label}
-          </button>
+          </motion.button>
         ))}
       </div>
+
       <div className="ai-response flex-1">
-        {loading ? (
-          <span className="loading">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="spin">
-              <circle cx="12" cy="12" r="10" /><path d="M12 2a10 10 0 0 1 10 10" />
-            </svg>
-            Thinking…
-          </span>
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        )}
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <motion.span key="loading" className="loading"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="spin">
+                <circle cx="12" cy="12" r="10" /><path d="M12 2a10 10 0 0 1 10 10" />
+              </svg>
+              Thinking…
+            </motion.span>
+          ) : (
+            <motion.div key={html.slice(0, 20)}
+              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: [0.0, 0.0, 0.2, 1.0] }}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

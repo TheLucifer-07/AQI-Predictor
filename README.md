@@ -1,78 +1,102 @@
-# 🌍 AQI Predictor – Air Quality Forecasting Dashboard
+# 🌍 AQI Predictor — Intelligent Air Quality Forecasting Platform
 
-An AI-powered web application to **predict Air Quality Index (AQI)**, visualize pollution trends, and provide insights into air quality using machine learning.
-
----
-
-## 🚀 Project Overview
-
-Air pollution is a major environmental and health concern.  
-This project aims to:
-
-- Forecast Air Quality Index (AQI)
-- Analyze historical pollution trends
-- Visualize pollutant concentrations
-- Support health-aware decision making
-
-The system combines **machine learning models** with an **interactive React-based dashboard**.
+> A modern, AI-powered web application to **predict Air Quality Index (AQI)**, visualize pollution trends, and deliver actionable environmental insights.
 
 ---
 
-## 🧠 Features
+## ✨ Overview
 
-- 📈 AQI Prediction using ML models  
-- 📊 Interactive data visualizations  
-- 📁 CSV-based input for model inference  
-- 🌆 Location-based analysis  
-- 🧪 Pollutant-level insights (PM2.5, PM10, NO₂, O₃, etc.)  
-- 🖥️ Responsive and modern UI  
+Air pollution is one of the most critical global challenges impacting health and climate.
+
+**AQI Predictor** is designed to:
+- Forecast air quality using machine learning models
+- Provide intuitive visual insights into pollution data
+- Help users make informed, health-conscious decisions
+
+The platform combines **data science + modern UI/UX** to deliver a seamless analytical experience.
+
+---
+
+## 🚀 Key Features
+
+- 📈 **AI-Based AQI Prediction**  
+  Generate AQI forecasts using trained ML models
+
+- 📊 **Interactive Visualizations**  
+  Explore trends with dynamic charts and graphs
+
+- 📁 **CSV Upload Support**  
+  Run predictions on custom datasets
+
+- 🌆 **Location-Based Insights**  
+  Analyze air quality across different regions
+
+- 🧪 **Pollutant-Level Analysis**  
+  Deep dive into PM2.5, PM10, NO₂, O₃, and more
+
+- ⚡ **Modern Responsive UI**  
+  Built with Tailwind for a clean and adaptive experience
 
 ---
 
 ## 🧪 Air Quality Parameters
 
-- **AQI** – Air Quality Index
-- **PM2.5** – Fine particulate matter
-- **PM10** – Coarse particulate matter
-- **NO₂** – Nitrogen Dioxide
-- **SO₂** – Sulfur Dioxide
-- **O₃** – Ozone
-- **CO** – Carbon Monoxide
-- **AOD** – Aerosol Optical Depth
-- **RH** – Relative Humidity
+| Parameter | Description |
+|----------|------------|
+| AQI | Air Quality Index |
+| PM2.5 | Fine particulate matter |
+| PM10 | Coarse particulate matter |
+| NO₂ | Nitrogen Dioxide |
+| SO₂ | Sulfur Dioxide |
+| O₃ | Ozone |
+| CO | Carbon Monoxide |
+| AOD | Aerosol Optical Depth |
+| RH | Relative Humidity |
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
+### 🌐 Frontend
 - React.js
 - Tailwind CSS
 - Vite
 
-### Backend / ML (Planned / Integrated)
+### ⚙️ Backend & Machine Learning
 - Python
 - Scikit-learn
-- Pandas, NumPy
-- Flask / FastAPI (for model serving)
+- Pandas & NumPy
+- Flask / FastAPI (API serving)
 
 ---
 
-## 📊 Application Pages
+## 📊 Application Modules
 
-- **Dashboard** – Project overview & key features
-- **Predict AQI** – Upload CSV & generate AQI predictions
-- **Visualization** – Explore historical & forecasted air quality trends
-- **About** – Project details, data sources & methodology
+### 📌 Dashboard
+- Overview of system capabilities
+- Key metrics and highlights
+
+### 🔮 Prediction
+- Upload datasets
+- Generate AQI predictions instantly
+
+### 📉 Visualization
+- Analyze historical and predicted trends
+- Interactive chart exploration
+
+### ℹ️ About
+- Project details
+- Methodology and data insights
 
 ---
 
 ## 📁 Project Structure
 
-```text
+```bash
 src/
-├── components/        # Reusable UI components
-├── pages/             # Dashboard, Predict, Visualization, About
-├── assets/            # Images & static assets
+├── components/        
+├── pages/             
+├── assets/            
+├── hooks/             
 ├── App.jsx
 ├── main.jsx

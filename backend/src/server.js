@@ -1,3 +1,4 @@
+/* global require, process */
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
@@ -16,7 +17,7 @@ app.get('/api/data', (req, res) => {
 });
 
 app.get('/api/live-aqi', async (req, res) => {
-  const { lat = '17.729', lon = '83.315', locName = 'APPCB City Centre' } = req.query;
+  const { lat = '17.729', lon = '83.315' } = req.query;
   try {
     const wxRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m`);
     const wxData = await wxRes.json();
@@ -28,7 +29,7 @@ app.get('/api/live-aqi', async (req, res) => {
     const usAqi = aqiData.current?.us_aqi || 85;
 
     res.json({ aqi: usAqi, wind: wind.toFixed(1), temp: temp.toFixed(1), source: 'satellite' });
-  } catch (e) {
+  } catch {
     const fallback = ML_DATA.monthly_trend[ML_DATA.monthly_trend.length - 1].avg_aqi;
     res.json({ aqi: fallback, wind: '—', temp: '—', source: 'fallback' });
   }

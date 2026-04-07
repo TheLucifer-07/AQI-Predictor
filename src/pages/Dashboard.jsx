@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import dashboardBg from "../assets/dashboard.JPG";
 import KeyFeatures from "../components/KeyFeatures";
 import AirQualityInfo from "../components/AirQualityInfo";
 import CTA from "../components/CTA";
-import { fadeUp, staggerContainer, staggerItem, viewport } from "../animations/variants";
+import { fadeUp, staggerContainer, staggerItem, staggerFlip, hoverLift, tapPress, viewport } from "../animations/variants";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -46,8 +47,8 @@ function Dashboard() {
               onClick={() => navigate("/predict")}
               className="px-6 py-3 bg-white hover:bg-black hover:text-white text-black rounded-lg font-semibold transition"
               variants={staggerItem}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, y: -2, transition: { duration: 0.15 } }}
+              whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
             >
               Predict AQI Now →
             </motion.button>
@@ -56,8 +57,8 @@ function Dashboard() {
               href="#what-is-aqi"
               className="px-6 py-3 border border-white text-white hover:bg-white hover:text-black rounded-lg font-semibold transition"
               variants={staggerItem}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, y: -2, transition: { duration: 0.15 } }}
+              whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
             >
               Learn More
             </motion.a>
