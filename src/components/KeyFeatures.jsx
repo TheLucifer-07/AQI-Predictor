@@ -1,4 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { staggerContainer, staggerItem, fadeUp, viewport } from "../animations/variants";
+
+const cards = [
+  { icon: "📡", title: "Real-Time Prediction", desc: "Get near real-time air quality predictions powered by ML models.", label: "Try Now →", path: "/predict" },
+  { icon: "📈", title: "Trend Analysis",       desc: "Explore pollution trends with advanced visualizations.",          label: "View Trends →", path: "/predict" },
+  { icon: "🩺", title: "Health Advisory",      desc: "Get personalized health suggestions based on AQI.",              label: "Learn More →", path: "/about" },
+];
 
 function KeyFeatures() {
   const navigate = useNavigate();
@@ -6,73 +14,62 @@ function KeyFeatures() {
   return (
     <section className="bg-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
-        
-        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
-          Key Features
-        </h2>
 
-        <p className="text-gray-600 mb-12 text-center max-w-3xl mx-auto">
+        <motion.h2
+          className="text-3xl font-bold text-gray-800 mb-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
+          Key Features
+        </motion.h2>
+
+        <motion.p
+          className="text-gray-600 mb-12 text-center max-w-3xl mx-auto"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
           Our platform provides intelligent tools to analyze air quality,
           forecast pollution trends, and support informed health decisions.
-        </p>
+        </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-          {/* Card 1 */}
-          <div className="bg-gray-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition">
-            <div className="text-4xl mb-4">📡</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              Real-Time Prediction
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Get near real-time air quality predictions powered by ML models.
-            </p>
-
-            <button
-              onClick={() => navigate("/predict")}
-              className="text-blue-500 hover:underline"
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
+          {cards.map(({ icon, title, desc, label, path }) => (
+            <motion.div
+              key={title}
+              className="bg-gray-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition"
+              variants={staggerItem}
+              whileHover={{ y: -6, scale: 1.02, boxShadow: "0 12px 32px rgba(0,0,0,0.10)", transition: { duration: 0.22 } }}
             >
-              Try Now →
-            </button>
-          </div>
-
-          {/* Card 2 */}
-          <div className="bg-gray-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition">
-            <div className="text-4xl mb-4">📈</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              Trend Analysis
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Explore pollution trends with advanced visualizations.
-            </p>
-
-            <button
-              onClick={() => navigate("/predict")}
-              className="text-blue-500 hover:underline"
-            >
-              View Trends →
-            </button>
-          </div>
-
-          {/* Card 3 */}
-          <div className="bg-gray-100 rounded-xl p-8 text-center shadow-sm hover:shadow-md transition">
-            <div className="text-4xl mb-4">🩺</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              Health Advisory
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Get personalized health suggestions based on AQI.
-            </p>
-
-            <button
-              onClick={() => navigate("/about")}
-              className="text-blue-500 hover:underline"
-            >
-              Learn More →
-            </button>
-          </div>
-
-        </div>
+              <motion.div
+                className="text-4xl mb-4"
+                whileHover={{ scale: 1.2, rotate: 6, transition: { duration: 0.2 } }}
+              >
+                {icon}
+              </motion.div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
+              <p className="text-gray-600 mb-4">{desc}</p>
+              <motion.button
+                onClick={() => navigate(path)}
+                className="text-blue-500 hover:underline"
+                whileHover={{ x: 3 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.15 }}
+              >
+                {label}
+              </motion.button>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
