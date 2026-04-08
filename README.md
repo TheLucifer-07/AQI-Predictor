@@ -146,28 +146,6 @@ AQI-Predictor/
 │   ├── middleware/
 │   └── server.js
 ```
-
----
-
-## 🔐 Environment Variables
-
-Create `.env` files for both frontend and backend:
-
-### Backend
-
-```env
-PORT=5000
-AQI_API_KEY=your_api_key
-WEATHER_API_KEY=your_api_key
-FRONTEND_URL=https://your-frontend.vercel.app
-```
-
-### Frontend
-
-```env
-VITE_API_URL=https://your-backend.onrender.com
-```
-
 ---
 
 ## 🚀 Getting Started
@@ -175,7 +153,7 @@ VITE_API_URL=https://your-backend.onrender.com
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/your-username/AQI-Predictor.git
+git clone https://github.com/TheLucifer-07/AQI-Predictor.git
 cd AQI-Predictor
 ```
 
@@ -206,8 +184,8 @@ npm run dev
 
 ## 🌐 Live Demo
 
-* 🔗 Frontend: [https://your-frontend.vercel.app](https://your-frontend.vercel.app)
-* 🔗 Backend: [https://your-backend.onrender.com](https://your-backend.onrender.com)
+* 🔗 Frontend: [https://aqi-predictor-07.vercel.app](https://aqi-predictor-07.vercel.app)
+* 🔗 Backend: [https://aqi-predictor-r892.onrender.com](https://aqi-predictor-r892.onrender.com)
 
 ---
 
