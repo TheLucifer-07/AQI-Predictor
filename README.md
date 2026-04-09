@@ -228,7 +228,7 @@ GitHub Actions · CI/CD Pipeline
 
 ```bash
 # 1️⃣ Clone repository
-git clone https://github.com/yourusername/aqi-predictor.git
+git clone https://github.com/TheLucifer-07/AQI-Predictor
 cd AQI-Predictor
 
 # 2️⃣ Frontend Setup
@@ -342,31 +342,6 @@ AQI-Predictor/
 
 ---
 
-## 🔐 <span style="color: #8b5cf6">Environment Variables</span>
-
-Create `.env.local` file:
-
-```env
-# API Keys
-VITE_OPENWEATHER_API_KEY=your_key_here
-VITE_MAPBOX_TOKEN=your_token_here
-VITE_BACKEND_URL=http://localhost:3000
-
-# Backend Config
-BACKEND_PORT=3000
-FRONTEND_URL=http://localhost:5173
-NODE_ENV=development
-
-# Database (if needed)
-DATABASE_URL=your_db_url
-
-# ML Model Config
-MODEL_PATH=./models/aqi_model.pkl
-FORECAST_DAYS=5
-```
-
----
-
 ## 📈 <span style="color: #06b6d4">Performance Metrics</span>
 
 | Metric | Target | Status |
@@ -385,7 +360,7 @@ We 💚 contributions! Here's how:
 
 ```bash
 # 1. Fork the repo
-git clone https://github.com/YOUR-USERNAME/aqi-predictor.git
+git clone https://github.com/TheLucifer-07/AQI-Predictor
 
 # 2. Create feature branch
 git checkout -b feature/amazing-feature
@@ -408,11 +383,9 @@ git push origin feature/amazing-feature
 
 ---
 
-## 📄 <span style="color: #f59e0b">License & Credits</span>
+## 📄 <span style="color: #f59e0b">Credits</span>
 
 <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
-
-**📜 License:** MIT License — [View LICENSE](LICENSE)
 
 **🛰️ Data Sources:**
 - MODIS (NASA Satellite Data)
@@ -426,8 +399,8 @@ git push origin feature/amazing-feature
 - UNEP Environmental Programs
 
 **👥 Maintainers:**
-- Your Name
-- Contributors & Community
+- HemaChandu 
+- Santosh
 
 </div>
 
